@@ -1,0 +1,27 @@
+.npt-logout-btn {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+}
+
+.auth-class {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  display: flex;
+}
+
+.name-class {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: 20px
+}
+
+a.text:active,
+a.text:hover,
+a.text {
+  text-decoration: none;
+  outline: none;
+  color: white;
+}

@@ -1,0 +1,19 @@
+<form clrForm [formGroup]="stationForm" (ngSubmit)="create()" clrLayout="vertical">
+  <clr-input-container style="margin-top: 0;">
+    <label for="name-input">Имя</label>
+    <input id="name-input" clrInput type="text" formControlName="name" name="name"/>
+    <clr-control-error>Минимальная длина: 5</clr-control-error>
+  </clr-input-container>
+  <clr-input-container>
+    <label for="serial-number-input">Серийный номер</label>
+    <input id="serial-number-input" clrInput type="text" formControlName="serialNumber" name="serial-number"/>
+    <clr-control-error>Минимальная длина: 5</clr-control-error>
+  </clr-input-container>
+  <clr-toggle-container>
+    <clr-toggle-wrapper>
+      <input id="registered-input" type="checkbox" clrToggle formControlName="registered" name="registered"/>
+      <label for="registered-input">Активирована</label>
+    </clr-toggle-wrapper>
+  </clr-toggle-container>
+  <button type="submit" class="btn btn-primary" style="right: 10px;bottom: 13px;position: absolute;">СОЗДАТЬ</button>
+</form>

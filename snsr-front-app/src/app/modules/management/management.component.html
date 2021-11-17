@@ -1,0 +1,101 @@
+<div class="management-container">
+  <button class="btn btn-outline" (click)="editModalOpen = true" style="margin-left: 38.5%;">Добавить</button>
+    <clr-datagrid class="device-manager" [clrDgLoading]="loading">
+      <clr-dg-column [clrDgField]="'name'">Имя</clr-dg-column>
+      <clr-dg-column [clrDgField]="'serialNumber'">Серийный номер</clr-dg-column>
+      <clr-dg-column>Состояние</clr-dg-column>
+      <clr-dg-column>Удалить</clr-dg-column>
+      <clr-dg-placeholder>Нет базовых станций</clr-dg-placeholder>
+      <clr-dg-row *clrDgItems="let station of stations" [clrDgItem]="station">
+        <clr-dg-cell>{{station.name}}</clr-dg-cell>
+        <clr-dg-cell>{{station.serialNumber}}</clr-dg-cell>
+        <clr-dg-cell class="trash-cell">
+          <div *ngIf="!station.registered; else reg">
+            <clr-icon shape="info-circle" class="is-warning" title="Станция деактивирована" size="28"></clr-icon>
+          </div>
+          <ng-template #reg>
+            <clr-icon shape="check-circle" class="is-success" title="Станция активирована" size="28"></clr-icon>
+          </ng-template>
+        </clr-dg-cell>
+        <clr-dg-cell class="trash-cell">
+          <button class="btn btn-link" (click)="deleteStation(station.id)" *ngIf="!station.registered; else btrash" style="margin: 0">
+            <clr-icon shape="trash" class="is-error" size="20"></clr-icon>
+          </button>
+          <ng-template #btrash>
+            <div class="trash-inactive">
+              <clr-icon shape="trash" class="is-disabled" title="Для удаления сначала деактивируйте станцию" size="20"></clr-icon>
+            </div>
+          </ng-template>
+        </clr-dg-cell>
+      </clr-dg-row>
+
+      <ng-template [(clrIfDetail)]="detail" let-detail>
+        <clr-dg-detail *clrIfDetail="let station">
+          <clr-dg-detail-header>{{station.name}}</clr-dg-detail-header>
+          <clr-dg-detail-body>
+            <p>Серийный номер: {{station.serialNumber}}</p>
+            <label>Активировать: </label>
+            <input type="checkbox" clrToggle (click)="changeStationState(station.id)" [(ngModel)]="station.registered"/>
+            <clr-datagrid>
+              <clr-dg-column [clrDgField]="'name'">Имя</clr-dg-column>
+              <clr-dg-column [clrDgField]="'serialNumber'">Серийный номер</clr-dg-column>
+              <clr-dg-column>Активировать</clr-dg-column>
+              <clr-dg-column>Удалить</clr-dg-column>
+              <clr-dg-placeholder>Станция деактивирована(или пустая)</clr-dg-placeholder>
+              <ng-template [ngIf]="station.registered">
+                <clr-dg-row *clrDgItems="let sensor of station.sensors" [clrDgItem]="sensor">
+                  <clr-dg-cell>{{sensor.name}}</clr-dg-cell>
+                  <clr-dg-cell>{{sensor.serialNumber}}</clr-dg-cell>
+                  <clr-dg-cell class="trash-cell">
+                    <input type="checkbox" clrToggle (click)="changeSensorState(station.id, sensor.id)"
+                           [(ngModel)]="sensor.registered"/>
+                  </clr-dg-cell>
+                  <clr-dg-cell class="trash-cell">
+                    <button class="btn btn-link" (click)="deleteSensor(station.id, sensor.id)" *ngIf="!sensor.registered; else strash" style="margin: 0">
+                      <clr-icon shape="trash" class="is-error" size="20"></clr-icon>
+                    </button>
+                    <ng-template #strash>
+                      <div class="trash-inactive">
+                        <clr-icon shape="trash" class="is-disabled" title="Для удаления сначала деактивируйте сенсор"
+                                  size="20"></clr-icon>
+                      </div>
+                    </ng-template>
+                  </clr-dg-cell>
+                </clr-dg-row>
+              </ng-template>
+              <clr-dg-footer>
+                <clr-dg-pagination #pgs [clrDgPageSize]="6">
+                  {{pgs.totalItems}} сенсоров
+                </clr-dg-pagination>
+              </clr-dg-footer>
+            </clr-datagrid>
+          </clr-dg-detail-body>
+        </clr-dg-detail>
+      </ng-template>
+      <clr-dg-footer>
+        <clr-dg-pagination #pgb [clrDgPageSize]="11">
+          {{pgb.totalItems}} станций
+        </clr-dg-pagination>
+      </clr-dg-footer>
+  </clr-datagrid>
+</div>
+
+<clr-modal [(clrModalOpen)]="editModalOpen">
+  <h3 class="modal-title">Добавить новое устройство</h3>
+  <div class="modal-body" style="height: 400px">
+    <clr-tabs clrLayout="vertical">
+      <clr-tab>
+        <button clrTabLink id="base-station">Базовая станция</button>
+        <clr-tab-content id="station-creation-content" *clrIfActive="true">
+          <app-base-station-creation (onStationCreation)="refresh()"></app-base-station-creation>
+        </clr-tab-content>
+      </clr-tab>
+      <clr-tab>
+        <button clrTabLink id="sensor">Сенсор</button>
+        <clr-tab-content id="sensor-creation-content" *clrIfActive>
+          <app-sensor-creation (onSensorCreation)="refresh()" [stations]="stations"></app-sensor-creation>
+        </clr-tab-content>
+      </clr-tab>
+    </clr-tabs>
+  </div>
+</clr-modal>

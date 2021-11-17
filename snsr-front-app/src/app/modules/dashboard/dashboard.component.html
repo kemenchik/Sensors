@@ -1,0 +1,73 @@
+<div class="dashboard-content">
+  <div class="dashboard-toolbar" *ngIf="stations" style="margin-bottom: 2rem;">
+    <div class="dashboard-toolbar-item">
+      <clr-datagrid class="dashboard-grid" [(clrDgSelected)]="selectedStations"
+                    (clrDgSelectedChange)="stationSelectionChanged()" [clrDgLoading]="stationLoading">
+        <clr-dg-column>Базовая станция</clr-dg-column>
+        <clr-dg-row *clrDgItems="let station of stations" [clrDgItem]="station">
+          <clr-dg-cell>{{station.name}}</clr-dg-cell>
+        </clr-dg-row>
+        <clr-dg-footer>
+          <clr-dg-pagination #pgb [clrDgPageSize]="5">
+            {{pgb.totalItems}} станций
+          </clr-dg-pagination>
+        </clr-dg-footer>
+      </clr-datagrid>
+    </div>
+    <div class="dashboard-toolbar-item">
+      <clr-datagrid class="dashboard-grid" [(clrDgSelected)]="selectedSensors"
+                    (clrDgSelectedChange)="sensorSelectionChanged()" [clrDgLoading]="sensorLoading">
+        <clr-dg-column>Cенсор</clr-dg-column>
+        <clr-dg-row *clrDgItems="let sensor of sensors" [clrDgItem]="sensor">
+          <clr-dg-cell>{{sensor.name}}</clr-dg-cell>
+        </clr-dg-row>
+        <clr-dg-placeholder>
+          Выберите станцию(и)
+        </clr-dg-placeholder>
+        <clr-dg-footer>
+          <clr-dg-pagination #pgs [clrDgPageSize]="5">
+            {{pgs.totalItems}} сенсоров
+          </clr-dg-pagination>
+        </clr-dg-footer>
+      </clr-datagrid>
+    </div>
+    <div class="dashboard-toolbar-item">
+      <clr-datagrid class="dashboard-grid" [(clrDgSelected)]="selectedType"
+                    (clrDgSelectedChange)="typeSelectionChanged()" [clrDgLoading]="typeLoading">
+        <clr-dg-column>Показатель</clr-dg-column>
+        <clr-dg-row *clrDgItems="let type of types" [clrDgItem]="type">
+          <clr-dg-cell>{{type.typeName}}</clr-dg-cell>
+        </clr-dg-row>
+        <clr-dg-placeholder>
+          Выберите сенсор(ы)
+        </clr-dg-placeholder>
+        <clr-dg-footer>
+          <clr-dg-pagination #pgt [clrDgPageSize]="5">
+            {{pgt.totalItems}} показателей
+          </clr-dg-pagination>
+        </clr-dg-footer>
+      </clr-datagrid>
+    </div>
+    <div class="dashboard-toolbar-item" style="display: flex; align-items: center">
+      <form clrForm [formGroup]="dateForm" novalidate>
+        <clr-date-container>
+          <label>От</label>
+          <input type="date" clrDate formControlName="firstDate" min="{{minDate}}" max="{{maxDate}}"/>
+        </clr-date-container>
+        <clr-date-container>
+          <label>До</label>
+          <input type="date" clrDate formControlName="secondDate" min="{{minDate}}" max="{{maxDate}}"/>
+        </clr-date-container>
+      </form>
+    </div>
+  </div>
+  <app-chart-line [data]="dataForGraph" [labels]="labels" *ngIf="showPlot" style="margin-bottom: 2rem;"></app-chart-line>
+  <div *ngIf="isMarkersLoaded" style="margin: 0 3rem 3rem;">
+    <agm-map [latitude]="googleMarkers[0].lat" [longitude]="googleMarkers[0].lng">
+      <div *ngFor="let item of googleMarkers">
+        <agm-marker [latitude]="item.lat" [longitude]="item.lng"></agm-marker>
+      </div>
+    </agm-map>
+  </div>
+</div>
+

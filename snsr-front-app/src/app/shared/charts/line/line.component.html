@@ -1,0 +1,37 @@
+<div class="flex-container">
+  <div class="chart-wrapper left">
+    <canvas baseChart
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins">
+    </canvas>
+    <canvas baseChart
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins">
+    </canvas>
+  </div>
+  <div class="dashboard-toolbar-item right" style="width: 100%" *ngIf="canCoeff">
+    <clr-datagrid class="dashboard-grid" [(clrDgSelected)]="selectedTypes" (clrDgSelectedChange)="input()"
+                  [clrDgLoading]="typeLoading">
+      <clr-dg-column>Показатель</clr-dg-column>
+      <clr-dg-row *clrDgItems="let type of types" [clrDgItem]="type">
+        <clr-dg-cell>{{type.code}}</clr-dg-cell>
+      </clr-dg-row>
+      <clr-dg-placeholder>
+        Выберите показатели
+      </clr-dg-placeholder>
+      <clr-dg-footer>
+        <clr-dg-pagination #pgt [clrDgPageSize]="5">
+          {{selectedTypes.length == 2 ? 'Коеффициент корреляции - ' + coefficient : 'Недостаточно показателей выбрано'}}
+        </clr-dg-pagination>
+      </clr-dg-footer>
+    </clr-datagrid>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<header class="header-6">
+  <div class="branding">
+    <span class="title">СЕНСОРИКА</span>
+  </div>
+
+  <div class="auth-class">
+    <button *ngIf="authenticationService.isLoggedIn" type="button" class="btn btn-outline npt-logout-btn"
+            (click)="logout()">Выйти
+    </button>
+  </div>
+</header>

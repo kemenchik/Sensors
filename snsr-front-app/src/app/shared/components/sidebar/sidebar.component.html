@@ -1,0 +1,5 @@
+<clr-vertical-nav class="snsr-vertical-nav">
+  <a clrVerticalNavLink routerLink="/dashboard" routerLinkActive="active">Мониторинг</a>
+  <a clrVerticalNavLink routerLink="/management" routerLinkActive="active"
+     *ngIf="role === 'ADMIN'">Панель управления</a>
+</clr-vertical-nav>

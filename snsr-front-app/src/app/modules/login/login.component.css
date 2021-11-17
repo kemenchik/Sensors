@@ -1,0 +1,154 @@
+h5 {
+  margin: 0;
+  color: white;
+}
+
+.full-screen {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  text-transform: uppercase;
+  color: white;
+}
+
+.full-screen__title {
+  color: white;
+  font-size: 50px;
+  letter-spacing: 15px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  z-index: 3;
+}
+
+.full-screen__text {
+  color: white;
+  font-size: 18px;
+  letter-spacing: 7px;
+  z-index: 3;
+  margin-bottom: 10rem;
+}
+
+.full-screen__body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-screen__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.full-screen__signin {
+  z-index: 4;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 45px;
+  background-color: rgba(0, 0, 0, .2);
+  width: 90%;
+}
+
+::ng-deep clr-input-container, clr-password-container {
+  margin: 17px 0 !important;
+  width: 300px !important;
+  height: 35px !important;
+}
+
+::ng-deep .clr-control-container {
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep .clr-input-wrapper {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  background-color: white;
+  border-radius: .2rem;
+}
+
+.btn-success-custom {
+  margin: 15px 0 !important;
+  width: 300px !important;
+  height: 35px !important;
+}
+
+.input_custom {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border-radius: .2rem;
+  background-color: white;
+  margin-right: 0.5rem;
+  border: none;
+}
+
+::ng-deep .clr-input-group {
+  border: none;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  max-height: none;
+  /*background-color: white;*/
+  max-width: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+::ng-deep label.clr-control-label {
+  height: 0;
+  min-height: 0;
+}
+
+.modal__form {
+  width: 100%;
+  height: 100%;
+}
+
+::ng-deep .modal-content {
+  color: white;
+  outline-offset: -7px;
+  outline-width: 8px !important;
+  outline-color: black !important;
+  outline: solid;
+  border-radius: 0.3rem;
+  background-color: black !important;
+  border-top: 10px solid #47c465;
+  border-bottom: 10px solid #00deff;
+  background-image: linear-gradient(#47c465, #00deff),
+  linear-gradient(#47c465, #00deff);
+  background-size: 10px 100%;
+  background-position: 0 0, 100% 0;
+  background-repeat: no-repeat;
+}
+
+.container__row {
+  display: flex;
+  width: 75%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.container__row__left {
+  flex-basis: 30%;
+}
+
+.container__row__right {
+  flex-basis: 70%;
+}

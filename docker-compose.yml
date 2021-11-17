@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+
+    snsr-front-app:
+        build: ./snsr-front-app
+        ports:
+            - 443:443
+        depends_on:
+            - snsr-back-app
+        image: mxmtrms/snsr-front-app
+        networks:
+            - front-net
+
+    snsr-back-app:
+        build: ./snsr-back-app
+        depends_on:
+            - database
+        image: mxmtrms/snsr-back-app
+        networks:
+            - back-net
+            - front-net
+        environment:
+            DB_URL: database
+            DB_PORT: 5432
+            SERVER_ADDRESS: 0.0.0.0
+            SERVER_PORT: 8443
+            REAL_IP: 194.87.234.98
+
+
+    snsr-core-app:
+        build: ./snsr-core-app
+        ports:
+            - 3000:3000
+        depends_on:
+            - database
+        image: mxmtrms/snsr-core-app
+        networks:
+            - back-net
+
+
+    database:
+        container_name: postgres_container
+        image: postgres
+        networks:
+            - back-net
+            - front-net
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            PGDATA: /data/postgres
+            POSTGRES_DB: snsr
+        ports:
+            - '5432:5432'
+        restart: unless-stopped
+
+networks:
+    back-net:
+    front-net:
